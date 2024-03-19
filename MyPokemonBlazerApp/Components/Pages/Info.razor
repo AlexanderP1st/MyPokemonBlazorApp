@@ -6,7 +6,16 @@
 
 @if (pokemon is not null)
 {
-    <p>@pokemon?.Name</p>
+   
+    <div class="card">
+        <h1>@pokemon?.Name</h1>
+        <p>HP: @pokemon?.HP</p>
+        <p>Speed: @pokemon?.Speed</p>
+        <p>Attack: @pokemon?.Attack</p>
+        <p>Defence: @pokemon?.Defence</p>
+        <p>Total: @pokemon?.Total</p>
+   
+    </div>
 }
 else
 {

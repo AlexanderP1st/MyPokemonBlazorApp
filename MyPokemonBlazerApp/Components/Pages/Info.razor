@@ -9,12 +9,33 @@
    
     <div class="card">
         <h1>@pokemon?.Name</h1>
-        <p>HP: @pokemon?.HP</p>
-        <p>Speed: @pokemon?.Speed</p>
-        <p>Attack: @pokemon?.Attack</p>
-        <p>Defence: @pokemon?.Defence</p>
-        <p>Total: @pokemon?.Total</p>
-   
+        <p>HP:</p>
+        <div class="progress style= " height:30px;">
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="@pokemon?.HP" aria-valuemin="1" aria-valuemax="255" style="width:@(pokemon?.HP*100/255)%">
+            </div>
+        </div>
+
+        <p>Speed:</p>
+        <div class="progress style= " height:30px;">
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="@pokemon?.Speed" aria-valuemin="1" aria-valuemax="255" style="width:@(pokemon?.Speed*100/255)%">
+            </div>
+        </div>
+
+        <p>Attack:</p>
+        <div class="progress style= "height:30px;">
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="@pokemon?.Attack" aria-valuemin="1" aria-valuemax="255" style="width:@(pokemon?.Attack*100/255)%">
+            </div>
+        </div>
+        <p>Defence:</p>
+        <div class="progress style= " height:30px;">
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="@pokemon?.Defence" aria-valuemin="1" aria-valuemax="255" style="width:@(pokemon?.Defence*100/255)%">
+            </div>
+        </div>
+        <p>Total:</p>
+        <div class="progress style= " height:30px;">
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="@pokemon?.Total" aria-valuemin="1" aria-valuemax="800" style="width:@(pokemon?.Total*100/800)%">
+                </div>
+        </div>
     </div>
 }
 else

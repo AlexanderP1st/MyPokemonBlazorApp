@@ -1,0 +1,75 @@
+﻿@page "/Trainers"
+@rendermode InteractiveServer
+@inject DatabaseContext DbContext
+
+<h3>Trainers</h3>
+        <div class="card">
+        <div class="card-body bg-light">
+            <h4 class="card-title">
+               <EditForm OnValidSubmit="Submit" EditContext="editContext">
+                 <DataAnnotationsValidator />
+                 <div class="row g-3">
+                     <div class="col-md-3">
+                      
+                     </div>
+                 </div>
+
+               </EditForm>
+            </h4>
+        </div>
+        </div>
+
+
+
+  
+<table class="table">
+   <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Companion</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+
+        </tr>
+   </thead
+     <tbody>
+            @foreach (var trainer in trainers)
+            {
+            <tr>
+
+                <td>@trainer.Name</td>
+                <td>@trainer.Companion.Name</td>
+                <td>
+                    <button class="btn btn-success" @onclick="() => Edit(trainer)">Edit</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" @onclick="() => Delete(trainer)">Delete</button>
+                </td>
+            </tr>
+            }
+     </tbody>
+ 
+            
+  
+ </table>
+
+ @code {
+    private Trainers model;
+
+    private List<Trainer> trainers;
+    protected async override Task OnInitializedAsync()
+    {
+        trainers= await DbContext.Trainers.Include(t=>t.Companion).ToListAsync();
+    }
+
+    private void Edit(Trainer trainers)
+    {
+     
+    }
+
+    private async Task Delete(Trainer trainers)
+    {
+      
+      
+    }
+}

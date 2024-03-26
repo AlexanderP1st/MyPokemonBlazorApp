@@ -24,8 +24,11 @@
                 <DataAnnotationsValidator />
                 <div class="row g-3">
                     <div class="col-md-3">
+                         <div class="col-md-3">
                         <label for="name" class="form-label">Name</label>
                         <InputText class="form-control" placeholder="Name" @bind-Value="model.Name" />
+                        <ValidationMessage For="@(() => model.Name)" />
+                    </div>
                         <ValidationMessage For="@(() => model.Name)" />
                     </div>
                     <div class="col-md-3">

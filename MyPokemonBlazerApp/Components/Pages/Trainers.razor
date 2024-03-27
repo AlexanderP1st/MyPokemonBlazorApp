@@ -1,13 +1,13 @@
 ﻿@page "/Trainers"
 @rendermode InteractiveServer
 @inject DatabaseContext DbContext
-@inject NavigationManager NavigationManager
+
 
 
 <div class="row g-0">
         <div class="col-md-12">
             <button class="btn btn-primary float-end" @onclick="ShowAddTrainer">
-                Add Trainer
+                Add trainer
             </button>
         </div>
  </div>
@@ -15,22 +15,19 @@
 @if (showForm)
 {
     <div class="card">
-        <div class="card-body bg-light">
+        <div class="="card-body bg-light">
             <h4 class="card-title">
-               
+                @model.Id == 0 > "Add Trainer : Edit Trainer")
+                </h4>
+                <EditForm OnValidSubmit="TrainerSubmit" EditContext="editContext">
+
+
+
+
+
+                </EditForm>
             </h4>
-            <EditForm OnValidSubmit="Submit" EditContext="editContext">
-                <DataAnnotationsValidator />
-                <div class="row g-3">
-                  <div class="col-md-3">
-                      <div class="col-md-3">
-                        <label for="name" class="form-label">Name</label>
-                        <class="form-control" placeholder="Name" @bind-Value="model.Name" />
-                      </div>
-                  </div>
-               </div>
-            </EditForm>
-        </div>
+        </div>"
     </div>
 }
 
@@ -39,6 +36,7 @@
 <table class="table">
    <thead>
         <tr>
+
             <th scope="col">Name</th>
             <th scope="col">Companion</th>
             <th scope="col">Edit</th>
@@ -50,7 +48,7 @@
             @foreach (var trainer in trainers)
             {
             <tr>
-
+        
                 <td>@trainer.Name</td>
                 <td>@trainer.Companion.Name</td>
                 <td>
@@ -72,6 +70,11 @@
     private bool showForm;
     private EditContext editContext;
     private List<Trainer> trainers;
+    
+    private void Info(Trainers trainer)
+    {
+       
+    }
    
     protected async override Task OnInitializedAsync()
     {
@@ -93,19 +96,23 @@
     }
     private void Submit()
     {
-
+    
     }
   
 
     
     private void ShowAddTrainer()
     {
-        
+      model = new Trainers();
+      editContext = new EditContext(model);
+      showForm = true;  
     }
 
     protected async Task Refresh()
     {
-       
+       model = new Trainers();
+       editContext = new EditContext(model);
+       trainers = await DbContext.Trainers.ToListAsync(); 
     }
 
 }

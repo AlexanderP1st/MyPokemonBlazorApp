@@ -17,16 +17,35 @@
     <div class="card">
         <div class="="card-body bg-light">
             <h4 class="card-title">
-                @model.Id == 0 > "Add Trainer : Edit Trainer")
+                @(model.Id == 0 ? "Add Trainer" : "Edit Trainer")
                 </h4>
-                <EditForm OnValidSubmit="TrainerSubmit" EditContext="editContext">
+                 <EditForm OnValidSubmit="TrainerSubmit" EditContext="editContext">
+                    <DataAnnotationsValidator/>
+                    <div class="col-md-3">
+                        <div class="col-md-3">
+                            <label for="name class="form-label">Name</label>
+                            <InputText class="form-control" placeholder="Name" @bind-Value="model.Name"/>
+                            <ValidationMessage For="@(() => model.Name)" />
+                        </div>
 
+                       <div class="col-md-6">
+                        <label for="type" class="form-label">Companion</label>
+                        <InputSelect class="form-select" placeholder="Companion" @bind-Value="companionId">
+                            @foreach (var pokemon in pokemons)
+                            {
+                                <option value="@pokemon.Id">@pokemon.Name</option>
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => model.Companion)" />
+                       </div>
 
-
-
-
-                </EditForm>
-            </h4>
+                        <div class="col-md-12">
+                               <button type="submit" class="btn btn-primary float-end">
+                                    @(model.Id == 0 ? "Add Trainer" : "Edit Trainer")
+                               </button>
+                        </div>
+                    </div>
+               </EditForm>
         </div>"
     </div>
 }
@@ -36,23 +55,23 @@
 <table class="table">
    <thead>
         <tr>
-
+            <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Companion</th>
             <th scope="col">Edit</th>
             <th scope="col">Delete</th>
 
         </tr>
-   </thead
+   </thead>
      <tbody>
-            @foreach (var trainer in trainers)
+        @foreach (var trainer in trainers)
             {
             <tr>
-        
+                <td>@trainer.Id</td>
                 <td>@trainer.Name</td>
                 <td>@trainer.Companion.Name</td>
                 <td>
-                    <button class="btn btn-success" @onclick="() => Edit(trainer)">Edit</button>
+                    <button class="btn btn-success" @onclick="() => TrainerEdit(trainer)">Edit</button>
                 </td>
                 <td>
                     <button class="btn btn-danger" @onclick="() => Delete(trainer)">Delete</button>
@@ -66,26 +85,26 @@
  </table>
 
 @code {
-    private Trainers model;
-    private bool showForm;
-    private EditContext editContext;
-    private List<Trainer> trainers;
-    
-    private void Info(Trainers trainer)
-    {
-       
-    }
    
-    protected async override Task OnInitializedAsync()
-    {
-        trainers= await DbContext.Trainers.Include(t=>t.Companion).ToListAsync();
-    }
+    private Trainer? trainer;
+    private List<Trainer>? trainers;
+    private EditContext editContext;
+    private bool showForm;
+    private Trainer model;
+    private List<Pokemon> pokemons;
+    private int companionId;
+    public EventCallback<bool> OnSaved { get; set; }
 
-    private void Edit(Trainer trainer)
+
+
+
+
+
+    private void TrainerEdit(Trainer trainer)
     {
-        
+        model = trainer;
         editContext = new EditContext(model);
-        showForm = true;
+        showForm = true; 
     }
 
     private async Task Delete(Trainer trainer)
@@ -94,25 +113,54 @@
         await DbContext.SaveChangesAsync();
         await Refresh();
     }
-    private void Submit()
-    {
-    
-    }
-  
 
-    
+    private async Task TrainerSubmit()
+    {
+        Model.Companion = pokemons.Single(p => p.Id == companionId);
+
+        if (Model.Id == 0)
+            DbContext.Trainers.Add(Model);
+        else
+            DbContext.Trainers.Update(Model);
+
+        await DbContext.SaveChangesAsync();
+        await OnSaved.InvokeAsync();
+        await Refresh();
+    }
+
+
+
+
     private void ShowAddTrainer()
     {
-      model = new Trainers();
-      editContext = new EditContext(model);
-      showForm = true;  
+        model = new Trainer();
+        editContext = new EditContext(model);
+        showForm = true;  
     }
 
     protected async Task Refresh()
     {
-       model = new Trainers();
-       editContext = new EditContext(model);
-       trainers = await DbContext.Trainers.ToListAsync(); 
+        model = new Trainer();
+        editContext = new EditContext(model);
+        trainers = await DbContext.Trainers.ToListAsync();
+        pokemons = await DbContext.Pokemons.OrderBy(p => p.Name).ToListAsync();
     }
+
+    public Trainer Model
+    {
+        get
+        {
+            return model;
+        }
+        set
+        {
+            model = value ?? new Trainer();
+            if (model.Companion is null)
+                model.Companion = new Pokemon();
+            companionId = model.Companion.Id;
+            editContext = new(model);
+        }
+    }
+
 
 }

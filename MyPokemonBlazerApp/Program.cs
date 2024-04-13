@@ -1,6 +1,6 @@
-using MyPokemonBlazerApp.Components;
-using MyPokemonBlazerApp.Components.Pages;
-using MyPokemonBlazerApp.Context;
+using MyPokemonBlazorApp.Components;
+using MyPokemonBlazorApp.Components.Pages;
+using MyPokemonBlazorApp.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 

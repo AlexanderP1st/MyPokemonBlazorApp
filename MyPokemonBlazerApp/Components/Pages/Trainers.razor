@@ -7,7 +7,7 @@
 <div class="row g-0">
         <div class="col-md-12">
             <button class="btn btn-primary float-end" @onclick="ShowAddTrainer">
-                Add trainer
+                Add Trainers
             </button>
         </div>
  </div>
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                </EditForm>
-        </div>"
+        </div>
     </div>
 }
 
@@ -63,10 +63,10 @@
 
         </tr>
    </thead>
-     <tbody>
+   <tbody>
         @foreach (var trainer in trainers)
             {
-            <tr>
+              <tr>
                 <td>@trainer.Id</td>
                 <td>@trainer.Name</td>
                 <td>@trainer.Companion.Name</td>
@@ -76,9 +76,9 @@
                 <td>
                     <button class="btn btn-danger" @onclick="() => Delete(trainer)">Delete</button>
                 </td>
-            </tr>
+              </tr>
             }
-     </tbody>
+    </tbody>
  
             
   

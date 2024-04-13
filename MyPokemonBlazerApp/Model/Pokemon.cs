@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MyPokemonBlazerApp.Model
+namespace MyPokemonBlazorApp.Model
 {
     public class Pokemon
     {

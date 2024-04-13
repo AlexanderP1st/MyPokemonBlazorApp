@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyPokemonBlazerApp.Model;
+using MyPokemonBlazorApp.Model;
 
-namespace MyPokemonBlazerApp.Context
+namespace MyPokemonBlazorApp.Context
 {
     public class DatabaseContext : DbContext
     {
@@ -14,6 +14,9 @@ namespace MyPokemonBlazerApp.Context
             var path = Environment.GetFolderPath(folder);
             var dbpath = Path.Join(path, "pokemon.db");//this is my database
             optionsBuilder.UseSqlite($"Data Source = {dbpath}");
+
         }
     }
 }
+
+

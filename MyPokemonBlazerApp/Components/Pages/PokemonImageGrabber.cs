@@ -1,6 +1,6 @@
-﻿using MyPokemonBlazerApp.Model;
+﻿using MyPokemonBlazorApp.Model;
 
-namespace MyPokemonBlazerApp.Components.Pages
+namespace MyPokemonBlazorApp.Components.Pages
 {
     public class PokemonImageGrabber
     {

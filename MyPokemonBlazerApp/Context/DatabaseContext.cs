@@ -6,8 +6,8 @@ namespace MyPokemonBlazorApp.Context
     public class DatabaseContext : DbContext
     {
         public DbSet<Pokemon> Pokemons { get; set; }
-        public DbSet<Trainer> Trainers { get; set; }
 
+        public DbSet<Trainer> Trainers { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var folder = Environment.SpecialFolder.MyDocuments;
